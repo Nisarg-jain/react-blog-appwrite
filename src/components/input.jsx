@@ -1,12 +1,10 @@
 import React, { useId } from 'react';
 
-// 💡 Capitalized "Input" so React recognizes it as a custom component
 const Input = React.forwardRef(function Input({
-    label,            // 
+    label,
     type = 'text',
-    placeholder = '',
     className = '',
-    ...props          
+    ...props
 }, ref) {
     const id = useId(); 
 
@@ -22,15 +20,15 @@ const Input = React.forwardRef(function Input({
                 </label>
             )}
             <input
+                {...props}
                 type={type}
-                placeholder={placeholder}
+                id={id}
+                ref={ref}
                 className={`px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full ${className}`}
-                ref={ref}     
-                id={id}       
-                {...props}    
             />
         </div>
     );
 });
+
 
 export default Input;
