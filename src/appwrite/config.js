@@ -125,7 +125,7 @@ export class AuthService {
         }
     }    
 
-     get FilePreview(fileId) {
+         getFilePreview(fileId) {
         return this.Storage.getFilePreview(conf.appwriteBucketId, fileId);
     }
 
