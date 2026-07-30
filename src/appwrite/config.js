@@ -1,5 +1,5 @@
 import conf from "../conf/conf";
-// Added Storage to the imports list
+
 import { Client, Account, ID, Query, Databases, Storage } from "appwrite";
 
 export class AuthService {
@@ -66,7 +66,7 @@ export class AuthService {
         conf.appwritePostsCollectionId,
         slug
       );
-      return true; // Return true to indicate successful deletion
+      return true; 
     } catch (error) {
       console.error("Appwrite service :: deletePost :: error", error);
       throw error;
