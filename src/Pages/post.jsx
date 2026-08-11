@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import appwriteService from '../appwrite/config'
 import Container from '../components/container/Container' 
-import PostCard from '../components/PostCard'
+import PostCard from '../components/PostCard' 
 
 export default function Post() {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // ✅ Call getPosts() without arguments so it uses the default collectionId
-    appwriteService.getPosts().then((response) => {
+    appwriteService.getPosts([]).then((response) => {
       if (response) {
         setPosts(response.documents)
       }

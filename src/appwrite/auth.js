@@ -12,24 +12,34 @@ export class AuthService {
     this.account = new Account(this.client);
   }
 
-  async register({ email, password, name }) {
+  // Primary account creation method
+  async createAccount({ email, password, name }) {
     try {
-      const userAccount = await this.account.create(ID.unique(), email, password, name);
+      const userAccount = await this.account.create(
+        ID.unique(),
+        email,
+        password,
+        name
+      );
       if (userAccount) {
         // Automatically log them in after a successful registration
-        return this.login({ email, password });
+        return await this.login({ email, password });
       } else {
         return userAccount;
       }
     } catch (error) {
-      console.log("Appwrite service :: register :: error", error);
+      console.log("Appwrite service :: createAccount :: error", error);
       throw error;
     }
   }
 
+  // Alias so calling authService.register() works identically
+  async register(data) {
+    return this.createAccount(data);
+  }
+
   async login({ email, password }) {
     try {
-      // Modern Appwrite uses createEmailPasswordSession
       return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {
       console.log("Appwrite service :: login :: error", error);
@@ -41,9 +51,9 @@ export class AuthService {
     try {
       return await this.account.get();
     } catch (error) {
-      console.log("Appwrite service :: getCurrentUser :: error", error);
+      // Return null quietly when no session exists
+      return null;
     }
-    return null; 
   }
 
   async logout() {

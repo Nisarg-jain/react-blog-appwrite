@@ -1,11 +1,12 @@
 import React from 'react';
-import { Logo, Container, LogoutBtn } from '../index'; // Capitalized component imports
-import { Link, useNavigate } from 'react-router-dom';  // Capitalized Link
+import Logo from '../logo';
+import Container from '../container/container';
+import LogoutBtn from './logoutBtn';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function Header() {
-  // Access auth status from your Redux store
-  const authStatus = useSelector((state) => state.auth.status); // or state.auth.isAuthenticated based on your slice
+  const authStatus = useSelector((state) => state.auth.status);
   const navigate = useNavigate();
 
   const navItems = [
@@ -17,22 +18,22 @@ function Header() {
     {
       name: 'Login',
       slug: '/login',
-      active: !authStatus, // Shows only when user is logged out
+      active: !authStatus,
     },
     {
       name: 'Signup',
       slug: '/signup',
-      active: !authStatus, // Shows only when user is logged out
+      active: !authStatus,
     },
     {
       name: 'All Posts',
       slug: '/all-posts',
-      active: authStatus,  // Shows only when user is logged in
+      active: authStatus,
     },
     {
       name: 'Add Post',
       slug: '/add-post',
-      active: authStatus,  // Shows only when user is logged in
+      active: authStatus,
     },
   ];
 
@@ -47,7 +48,6 @@ function Header() {
           </div>
 
           <ul className="flex ml-auto items-center">
-            {/* Render navigation items based on active status */}
             {navItems.map((item) =>
               item.active ? (
                 <li key={item.name}>
@@ -61,7 +61,6 @@ function Header() {
               ) : null
             )}
 
-            {/* Show logout button if user is authenticated */}
             {authStatus && (
               <li>
                 <LogoutBtn />

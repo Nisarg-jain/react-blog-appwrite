@@ -15,7 +15,8 @@ function Signup() {
     const create = async (data) => {
         setError("")
         try { 
-            const userData = await authService.createAccount(data)
+            // Updated to authService.register(data) to match auth.js
+            const userData = await authService.register(data)
             if (userData) {
                 const currentUser = await authService.getCurrentUser()
                 if (currentUser) dispatch(login({ userData: currentUser }));
@@ -30,7 +31,6 @@ function Signup() {
         <div className="flex items-center justify-center w-full my-8">
             <div className="mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10 shadow-md">
                 
-               
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
                         <Logo width="100%" />
@@ -47,13 +47,10 @@ function Signup() {
                     </Link>
                 </p>
 
-                
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
-                
                 <form onSubmit={handleSubmit(create)} className="mt-8">
                     <div className="space-y-5">
-                        
                         
                         <Input
                             label="Full Name: "
@@ -63,7 +60,6 @@ function Signup() {
                             })}
                         />
 
-                        
                         <Input
                             label="Email: "
                             placeholder="Enter your email"
@@ -71,14 +67,13 @@ function Signup() {
                             {...register("email", {
                                 required: true,
                                 validate: {
-                                    matchPattern: (value) => 
+                                    matchPatern: (value) => 
                                         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
                                         "Email address must be a valid address",
                                 }
                             })}
                         />
 
-                        
                         <Input
                             label="Password: "
                             type="password"
@@ -88,7 +83,6 @@ function Signup() {
                             })}
                         />
 
-                        
                         <Button type="submit" className="w-full">
                             Create Account
                         </Button>
