@@ -126,12 +126,11 @@ export class Service {
   getFilePreview(fileId) {
     if (!fileId) return "";
     try {
-      // getFilePreview returns a URL instance or string depending on SDK version
-      const result = this.bucket.getFilePreview(
+      const result = this.bucket.getFileView(
         conf.appwriteBucketId,
         fileId
       );
-      return result?.href || result.toString();
+      return result?.href || (typeof result === 'string' ? result : result.toString());
     } catch (error) {
       console.log("Appwrite service :: getFilePreview :: error", error);
       return "";
