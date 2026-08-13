@@ -7,17 +7,21 @@ import { Link } from 'react-router-dom'
 
 function Home() {
   const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
   const authStatus = useSelector((state) => state.auth.status)
 
   useEffect(() => {
     if (authStatus) {
+      setLoading(true)
       appwriteService.getPosts([]).then((posts) => {
         if (posts) {
           setPosts(posts.documents)
         }
-      })
+        setLoading(false)
+      }).catch(() => setLoading(false))
     } else {
       setPosts([])
+      setLoading(false)
     }
   }, [authStatus])
 
@@ -99,7 +103,7 @@ function Home() {
             </p>
           </div>
 
-          {/* Card 4 (New) */}
+          {/* Card 4 */}
           <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
             <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-4 font-bold text-xl">
               📱
@@ -110,7 +114,7 @@ function Home() {
             </p>
           </div>
 
-          {/* Card 5 (New) */}
+          {/* Card 5 */}
           <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
             <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-4 font-bold text-xl">
               🔗
@@ -121,7 +125,7 @@ function Home() {
             </p>
           </div>
 
-          {/* Card 6 (New) */}
+          {/* Card 6 */}
           <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
             <div className="w-12 h-12 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center mb-4 font-bold text-xl">
               🔄
@@ -133,7 +137,7 @@ function Home() {
           </div>
         </section>
 
-        {/* --- DYNAMIC SECTION BASED ON AUTH STATUS --- */}
+        {/* --- DYNAMIC SECTION WITH SKELETON LOADER --- */}
         {authStatus ? (
           <section className="mt-16 pt-10 border-t border-slate-200">
             <div className="flex items-center justify-between mb-8">
@@ -143,7 +147,18 @@ function Home() {
               </Link>
             </div>
 
-            {posts.length > 0 ? (
+            {loading ? (
+              /* Skeleton Loader Grid */
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {[1, 2, 3, 4].map((n) => (
+                  <div key={n} className="bg-white rounded-2xl p-4 border border-slate-200/80 animate-pulse">
+                    <div className="w-full h-44 bg-slate-200 rounded-xl mb-4"></div>
+                    <div className="h-5 bg-slate-200 rounded w-3/4 mb-2"></div>
+                    <div className="h-4 bg-slate-100 rounded w-1/2"></div>
+                  </div>
+                ))}
+              </div>
+            ) : posts.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {posts.map((post) => (
                   <div key={post.$id}>
