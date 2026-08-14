@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import './App.css'
 import authService from './appwrite/auth'
 import { login, logout } from './store/authSlice'
-import { Header, Footer } from './components'
+import { Footer, Header } from './components'
 import { Outlet } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 
@@ -21,37 +22,20 @@ function App() {
         }
       })
       .finally(() => setLoading(false))
-  }, [dispatch])
+  }, [])
 
   return !loading ? (
-    <div className="min-h-screen flex flex-wrap content-between bg-slate-50">
-      {/* Toast Notifications */}
-      <Toaster 
-        position="top-right" 
-        reverseOrder={false}
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: '#333',
-            color: '#fff',
-            borderRadius: '10px',
-          },
-        }} 
-      />
-
+    <div className="min-h-screen flex flex-col justify-between bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
+      <Toaster position="top-right" />
       <div className="w-full block">
         <Header />
         <main>
           <Outlet />
         </main>
-        <Footer />
       </div>
+      <Footer />
     </div>
-  ) : (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
-    </div>
-  )
+  ) : null
 }
 
 export default App

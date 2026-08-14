@@ -2,58 +2,40 @@ import React from 'react'
 import appwriteService from '../appwrite/config'
 import { Link } from 'react-router-dom'
 
-function PostCard({ $id, title, featuredImage, content, $createdAt }) {
-  // Calculate reading time (~200 words/min)
-  const calculateReadTime = (htmlContent) => {
-    if (!htmlContent) return '1 min read'
-    const plainText = htmlContent.replace(/<[^>]+>/g, '')
-    const wordCount = plainText.trim().split(/\s+/).filter(Boolean).length
-    const minutes = Math.max(1, Math.ceil(wordCount / 200))
-    return `${minutes} min read`
-  }
-
-  // Format creation date
-  const formatDate = (dateString) => {
-    if (!dateString) return 'Recently'
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    })
-  }
-
-  const getImageSrc = (fileId) => {
-    if (!fileId) return ''
-    const preview = appwriteService.getFilePreview(fileId)
-    return typeof preview === 'string' ? preview : preview?.href || ''
-  }
+function PostCard({ $id, title, featuredImage, $createdAt }) {
+  const formattedDate = $createdAt
+    ? new Date($createdAt).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      })
+    : 'Aug 12, 2026'
 
   return (
-    <Link to={`/post/${$id}`}>
-      <div className="w-full bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group flex flex-col h-full">
-        {/* Featured Image Thumbnail */}
-        <div className="w-full justify-center items-center mb-4 overflow-hidden rounded-xl bg-slate-100 aspect-video flex">
-          {featuredImage ? (
+    <Link to={`/post/${$id}`} className="group block h-full">
+      <div className="w-full h-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 hover:border-blue-500/40 dark:hover:border-blue-500/40 flex flex-col justify-between">
+        
+        {/* Post Image Container */}
+        <div>
+          <div className="w-full h-52 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800 mb-4">
             <img
-              src={getImageSrc(featuredImage)}
+              src={appwriteService.getFilePreview(featuredImage)}
               alt={title}
-              className="rounded-xl object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
-          ) : (
-            <div className="text-slate-400 text-sm font-medium">No Image</div>
-          )}
+          </div>
+
+          {/* Title */}
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white transition-colors mb-3">
+            {title}
+          </h2>
         </div>
 
-        {/* Title */}
-        <h2 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2">
-          {title}
-        </h2>
-
-        {/* Metadata Footer */}
-        <div className="mt-auto pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
-          <span>{formatDate($createdAt)}</span>
+        {/* Card Footer / Date */}
+        <div className="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-800/60">
+          <span>{formattedDate}</span>
           <span>•</span>
-          <span>{calculateReadTime(content)}</span>
+          <span>1 min read</span>
         </div>
       </div>
     </Link>

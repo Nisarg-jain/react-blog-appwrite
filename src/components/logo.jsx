@@ -2,22 +2,34 @@ import React from 'react'
 
 function Logo({ width = '100px' }) {
   return (
-    <div className="flex items-center space-x-2 font-bold text-xl tracking-tight text-blue-600">
-      <svg
-        className="w-7 h-7 text-blue-600"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
+    <div className="flex items-center gap-2 select-none">
+      {/* Blue Icon Box */}
+      <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-blue-600 text-white shadow-md">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth="2"
-          d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
-        />
-      </svg>
-      <span className="text-slate-900 font-extrabold">
-        Blog<span className="text-blue-600">Craft</span>
+          className="w-4 h-4"
+        >
+          <path d="M12 19l7-7 3 3-7 7-3-3z" />
+          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+          <path d="M2 2l7.586 7.586" />
+          <circle cx="11" cy="11" r="2" />
+        </svg>
+      </div>
+
+      {/* Brand Text */}
+      <span className="font-extrabold text-xl tracking-tight">
+        <span style={{ color: 'var(--logo-color, currentColor)' }} className="text-slate-900 dark:text-white">
+          Blog
+        </span>
+        <span style={{ color: '#38bdf8' }} className="ml-1">
+          Craft
+        </span>
       </span>
     </div>
   )

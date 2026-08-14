@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 #root {
   min-height: 100vh;
@@ -8,4 +9,33 @@
 
 main {
   flex-grow: 1;
+}
+
+
+.dark header a span {
+  color: #ffffff !important;
+}
+
+.dark header a span span:last-child {
+  color: #60a5fa !important;
+}
+
+
+.dark a[href*="/post/"] > div,
+.dark a[href*="/post/"] {
+  background-color: #0f172a !important; 
+  border-color: #1e293b !important;    
+  color: #f8fafc !important;            
+}
+
+.dark a[href*="/post/"] h2 {
+  color: #ffffff !important;
+}
+
+.dark a[href*="/post/"] span {
+  color: #94a3b8 !important;           
+}
+
+.dark a[href*="/post/"] span:last-child {
+  color: #60a5fa !important;           
 }

@@ -13,6 +13,7 @@ export default function PostForm({ post }) {
       slug: post?.$id || '',
       content: post?.content || '',
       status: post?.status || 'active',
+      category: post?.category || 'Tech',
     },
   })
 
@@ -30,6 +31,7 @@ export default function PostForm({ post }) {
       const dbPost = await appwriteService.updatePost(post.$id, {
         ...data,
         featuredImage: file ? file.$id : undefined,
+        authorName: userData?.name || 'Anonymous',
       })
 
       if (dbPost) {
@@ -47,6 +49,7 @@ export default function PostForm({ post }) {
         const dbPost = await appwriteService.createPost({
           ...data,
           userId: userData.$id,
+          authorName: userData?.name || 'Anonymous',
         })
 
         if (dbPost) {
@@ -120,6 +123,12 @@ export default function PostForm({ post }) {
             />
           </div>
         )}
+        <Select
+          options={['Tech', 'Lifestyle', 'Coding', 'Design', 'General']}
+          label="Category"
+          className="mb-4"
+          {...register('category', { required: true })}
+        />
         <Select
           options={['active', 'inactive']}
           label="Status"
