@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Container from '../container/Container'
+import Container from '../container/container.jsx'
 import LogoutBtn from './logoutBtn'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
