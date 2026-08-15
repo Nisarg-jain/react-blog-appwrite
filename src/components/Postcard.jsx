@@ -21,6 +21,9 @@ function PostCard({ $id, title, featuredImage, $createdAt }) {
             <img
               src={appwriteService.getFilePreview(featuredImage)}
               alt={title}
+              onError={(e) => {
+                e.target.src = 'https://placehold.co/600x400/1e293b/ffffff?text=BlogCraft'
+              }}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           </div>

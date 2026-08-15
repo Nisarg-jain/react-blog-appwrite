@@ -68,7 +68,7 @@ function Home() {
               to={authStatus ? '/add-post' : '/login'}
               className="px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl shadow-md transition-all duration-200"
             >
-              Create New Post
+              {authStatus ? 'Create New Post' : 'Get Started'}
             </Link>
           </div>
         </section>
@@ -95,8 +95,8 @@ function Home() {
           </div>
         </section>
 
-        {/* Latest Articles Section */}
-        {posts.length > 0 && (
+        {/* Latest Articles Section - Only rendered when logged in */}
+        {authStatus && posts.length > 0 && (
           <section className="py-12 border-t border-slate-200 dark:border-slate-800">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Latest Articles</h2>
@@ -111,6 +111,18 @@ function Home() {
                 </div>
               ))}
             </div>
+          </section>
+        )}
+
+        {/* Prompt when logged out */}
+        {!authStatus && (
+          <section className="py-12 text-center border-t border-slate-200 dark:border-slate-800">
+            <p className="text-slate-500 dark:text-slate-400">
+              <Link to="/login" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
+                Login
+              </Link>{' '}
+              to explore and read all published posts.
+            </p>
           </section>
         )}
       </Container>
